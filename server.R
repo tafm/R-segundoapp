@@ -34,6 +34,7 @@ shinyServer(function(input, output) {
   })
   
   #Seletor gráfico
+  
   output$seletorgrafico<- renderUI({
     if(input$nvars == "1") {
       tipograficos <- c("Histograma" = 1, "Pizza" = 2)
@@ -42,4 +43,29 @@ shinyServer(function(input, output) {
     }
     selectInput("tipografico", "Escolha o gráfico:", tipograficos)
   })
+  
+  #Sumário
+  
+  
+  output$sumario <- renderTable({
+    matrizsumario <- matrix(NA, nrow=input$nvars, ncol=6)
+    matrizsumario[1,] <- c(min(dados[,input$varx]), quantile(dados[, input$varx], 0.25), median(dados[, input$varx]), mean(dados[, input$varx]), quantile(dados[, input$varx], 0.75), max(dados[, input$varx]))
+    if(input$nvars == "1") {
+      nomessum <- c(input$varx)
+      summary(dados[,c(input$varx)])
+      dimnames(matrizsumario) = (list(nomessum, c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")))
+      matrizsumario
+    } else {
+      if(input$vary != "") {
+        nomessum <- c(input$varx, input$vary)
+        matrizsumario[2,] <- c(min(dados[,input$vary]), quantile(dados[, input$vary], 0.25), median(dados[, input$vary]), mean(dados[, input$vary]), quantile(dados[, input$vary], 0.75), max(dados[, input$vary]))
+        summary(dados[,c(input$varx, input$vary)])
+        dimnames(matrizsumario) = (list(nomessum, c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")))
+        matrizsumario
+      }
+    }
+  })
+  
+  #Tabela
+  output$tabela <- renderDataTable(dados,options = list(scrollX = TRUE))
 })

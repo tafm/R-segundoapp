@@ -10,16 +10,16 @@ ui <- dashboardPage(
     uiOutput("seletorvariavelx"),
     conditionalPanel(
       cond = "input.nvars == 2", 
-      uiOutput("seletorvariavely"),
-      uiOutput("seletorgrafico")
-    )
+      uiOutput("seletorvariavely")
+    ),
+    uiOutput("seletorgrafico")
   ),
   
   dashboardBody(fluidRow(tabBox(
     width=12,
-    selected = "Gráficos",
-    tabPanel("Gráficos", "Tab content 1"),
-    tabPanel("Sumário", "Tab content 2"),
-    tabPanel("Tabela", "Note that when side=right, the tab order is reversed.")
+    selected = "Gráfico",
+    tabPanel("Gráfico", "Tab content 1"),
+    tabPanel("Sumário", tableOutput('sumario')),
+    tabPanel("Tabela", dataTableOutput('tabela'))
   )))
 )
