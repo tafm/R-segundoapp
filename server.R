@@ -32,4 +32,14 @@ shinyServer(function(input, output) {
     }
     selectInput("vary", "Variável y:", variaveisB, selected = selecionadaB)
   })
+  
+  #Seletor gráfico
+  output$seletorgrafico<- renderUI({
+    if(input$nvars == "1") {
+      tipograficos <- c("Histograma" = 1, "Pizza" = 2)
+    } else {
+      tipograficos <- c("Barras" = 3)
+    }
+    selectInput("tipografico", "Escolha o gráfico:", tipograficos)
+  })
 })
