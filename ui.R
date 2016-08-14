@@ -1,6 +1,7 @@
 library(shiny)
 library(shinydashboard)
 library(ggplot2)
+library(reshape2)
 
 ui <- dashboardPage(
   dashboardHeader(title = "PRO-SPB"),
@@ -18,7 +19,7 @@ ui <- dashboardPage(
   dashboardBody(fluidRow(tabBox(
     width=12,
     selected = "Gráfico",
-    tabPanel("Gráfico", "Tab content 1"),
+    tabPanel("Gráfico", plotOutput('grafico')),
     tabPanel("Sumário", tableOutput('sumario')),
     tabPanel("Tabela", dataTableOutput('tabela'))
   )))
